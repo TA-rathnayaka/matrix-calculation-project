@@ -1,5 +1,5 @@
 //
-// Created by Dhananjaya on 2022-12-17.
+// Created by Tharanga on 2022-12-17.
 //
 #include <iostream>
 #include <vector>
@@ -15,6 +15,7 @@ class Matrix {
         size_t column;
     };
 
+    friend std::ostream &operator<<(std::ostream &os, Matrix &lhs);
 
 private:
     std::vector<std::vector<double>> matrix;
@@ -46,6 +47,8 @@ public:
 
     Matrix(std::vector<std::vector<double>> matrix);
 
+//    Matrix(Matrix &obj);
+
     Matrix add(Matrix &operand);
 
     Matrix subtract(Matrix &operand);
@@ -66,9 +69,26 @@ public:
 
     Matrix inverse();
 
-
     struct size size_of_matrix;
+
+    Matrix operator+(Matrix &rhs);
+
+    Matrix operator-(Matrix &rhs);
+
+    Matrix operator*(Matrix &rhs);
+
+    Matrix operator*(int &rhs);
+
+    Matrix operator/(double &scaler);
+
+    bool operator==(Matrix &rhs);
+
+    bool operator!=(Matrix &rhs);
+
+    Matrix operator=(Matrix &rhs);
+
 };
+
 
 
 #endif //MATIX_MATRIX_H
