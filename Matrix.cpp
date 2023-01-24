@@ -1,8 +1,9 @@
 //
-// Created by Dhananjaya on 2022-12-17.
+// Created by Tharanga on 2022-12-17.
 //
 
 #include "Matrix.h"
+
 Matrix::Matrix(const size_t &numberOfRows, const size_t &numberOfColumn)
         : size_of_matrix{.rows = numberOfRows, .column = numberOfColumn} {
     matrix.resize(numberOfRows);
@@ -10,6 +11,10 @@ Matrix::Matrix(const size_t &numberOfRows, const size_t &numberOfColumn)
         matrix.resize(numberOfColumn);
     }
 }
+
+//Matrix::Matrix(Matrix &obj) {
+//    Matrix(obj.matrix);
+//}
 
 bool Matrix::setElement(const int &rowNumber, const int &columnNumber, const double &value) {
     if (columnNumber > size_of_matrix.column || rowNumber > size_of_matrix.rows) {
@@ -20,18 +25,17 @@ bool Matrix::setElement(const int &rowNumber, const int &columnNumber, const dou
 }
 
 Matrix Matrix::add(Matrix &operand) {
-
+    Matrix tempMatrix{matrix};
     if (size_of_matrix.rows == operand.size_of_matrix.rows && size_of_matrix.column == operand.size_of_matrix.column) {
         for (int row = 0; row < size_of_matrix.rows; row++) {
             for (int column = 0; column < size_of_matrix.column; column++) {
-                double total = getElements(row, column) + operand.getElements(row, column);
-                setElement(row, column, total);
+                double total = tempMatrix.getElements(row, column) + operand.getElements(row, column);
+                tempMatrix.setElement(row, column, total);
 
             }
         }
-        return true;
     }
-    return false;
+    return tempMatrix;
 }
 
 
@@ -258,3 +262,71 @@ Matrix Matrix::getAdjoint() {
 Matrix Matrix::inverse() {
     return getAdjoint().scalarMultiplication(1 / determinant());
 }
+
+Matrix Matrix::operator=(Matrix &rhs) {
+    if (this == &rhs) {
+        return *this;
+    }
+    matrix = rhs.matrix;
+    size_of_matrix.rows = rhs.size_of_matrix.rows;
+    size_of_matrix.column = rhs.size_of_matrix.column;
+    return (*this);
+
+}
+
+Matrix Matrix::operator+(Matrix &rhs) {
+    return add(rhs);
+}
+
+Matrix Matrix::operator-(Matrix &rhs) {
+    return subtract(rhs);
+}
+
+Matrix Matrix::operator*(Matrix &rhs) {
+    return multiply(rhs);
+}
+
+Matrix Matrix::operator/(double &scaler) {
+    return scalarMultiplication(1 / scaler);
+}
+
+bool Matrix::operator==(Matrix &rhs) {
+    if (this == &rhs) {
+        return true;
+    } else {
+        if (size_of_matrix.rows == rhs.size_of_matrix.rows && size_of_matrix.column == rhs.size_of_matrix.column) {
+            for (int i = 0; i < size_of_matrix.rows; i++) {
+                for (int j = 0; j < size_of_matrix.column; j++) {
+                    if (getElements(i, j) != getElements(i, j)) {
+                        return false;
+                    }
+
+                }
+            }
+            return true;
+        }
+    }
+
+}
+
+bool Matrix::operator!=(Matrix &rhs) {
+    return (!(*this == rhs));
+}
+
+Matrix Matrix::operator*(int &scaler) {
+    return scalarMultiplication(scaler);
+}
+
+std::ostream &operator<<(std::ostream &os, Matrix &lhs) {
+    for (auto &row: lhs.matrix) {
+        std::cout << "[ ";
+        for (auto &column: row) {
+            std::cout << " " << column << " ";
+        }
+        std::cout << "] " << std::endl;
+    }
+    return os;
+}
+
+
+
