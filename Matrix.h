@@ -15,20 +15,20 @@ class Matrix {
         size_t column;
     };
 
-    friend std::ostream &operator<<(std::ostream &os, Matrix &lhs);
+    friend std::ostream &operator<<(std::ostream &os, const Matrix &lhs);
 
 private:
     std::vector<std::vector<double>> matrix;
 
     std::vector<double> &subtractRows(const std::vector<double> &subtracter, std::vector<double> row);
 
-    double getDivider(std::vector<double> rowElements) const;
+    double getDivider(const std::vector<double> &rowElements) const;
 
-    std::vector<double> divideRow(std::vector<double> rowElements);
+    std::vector<double> divideRow(std::vector<double> &rowElements);
 
-    int numberOfZeroRows(std::vector<std::vector<double>> matrix);
+    int numberOfZeroRows(const std::vector<std::vector<double>> &matrix);
 
-    double determinant2x2(Matrix matrix2x2);
+    double determinant2x2(const Matrix &matrix2x2);
 
 
 public:
@@ -47,11 +47,11 @@ public:
 
     Matrix(std::vector<std::vector<double>> matrix);
 
-//    Matrix(Matrix &obj);
+    Matrix(const Matrix &obj);
 
-    Matrix add(Matrix &operand);
+    Matrix add(const Matrix &operand);
 
-    Matrix subtract(Matrix &operand);
+    Matrix subtract(const Matrix &operand);
 
     Matrix scalarMultiplication(const double &scale);
 
@@ -71,24 +71,25 @@ public:
 
     struct size size_of_matrix;
 
-    Matrix operator+(Matrix &rhs);
+    Matrix operator+(const Matrix &rhs);
 
-    Matrix operator-(Matrix &rhs);
+    Matrix operator-(const Matrix &rhs);
 
-    Matrix operator*(Matrix &rhs);
+    Matrix operator*(const Matrix &rhs);
 
     Matrix operator*(int &rhs);
 
-    Matrix operator/(double &scaler);
+    Matrix operator/(const double &scaler);
 
-    bool operator==(Matrix &rhs);
+    bool operator==(const Matrix &rhs);
 
-    bool operator!=(Matrix &rhs);
+    bool operator!=(const Matrix &rhs);
 
-    Matrix operator=(Matrix &rhs);
+    Matrix operator=(const Matrix &rhs);
+
+    Matrix operator~();
 
 };
-
 
 
 #endif //MATIX_MATRIX_H

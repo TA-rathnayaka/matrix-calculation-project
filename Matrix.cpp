@@ -12,9 +12,10 @@ Matrix::Matrix(const size_t &numberOfRows, const size_t &numberOfColumn)
     }
 }
 
-//Matrix::Matrix(Matrix &obj) {
-//    Matrix(obj.matrix);
-//}
+Matrix::Matrix(const Matrix &obj) : matrix{obj.matrix}, size_of_matrix{obj.matrix.size(), obj.matrix[0].size()} {
+
+}
+
 
 bool Matrix::setElement(const int &rowNumber, const int &columnNumber, const double &value) {
     if (columnNumber > size_of_matrix.column || rowNumber > size_of_matrix.rows) {
@@ -24,7 +25,7 @@ bool Matrix::setElement(const int &rowNumber, const int &columnNumber, const dou
     return true;
 }
 
-Matrix Matrix::add(Matrix &operand) {
+Matrix Matrix::add(const Matrix &operand) {
     Matrix tempMatrix{matrix};
     if (size_of_matrix.rows == operand.size_of_matrix.rows && size_of_matrix.column == operand.size_of_matrix.column) {
         for (int row = 0; row < size_of_matrix.rows; row++) {
@@ -39,7 +40,7 @@ Matrix Matrix::add(Matrix &operand) {
 }
 
 
-Matrix Matrix::subtract(Matrix &operand) {
+Matrix Matrix::subtract(const Matrix &operand) {
     Matrix temp{*this};
     if (size_of_matrix.rows == operand.size_of_matrix.rows && size_of_matrix.column == operand.size_of_matrix.column) {
         for (int row = 0; row < size_of_matrix.rows; row++) {
@@ -141,7 +142,7 @@ std::vector<double> &Matrix::subtractRows(const std::vector<double> &subtracter,
     return row;
 }
 
-double Matrix::getDivider(std::vector<double> rowElements) const {
+double Matrix::getDivider(const std::vector<double> &rowElements) const {
     for (int column = 0; column < size_of_matrix.column; column++) {
         if (rowElements[column] != 0) {
             return rowElements[column];
@@ -149,7 +150,7 @@ double Matrix::getDivider(std::vector<double> rowElements) const {
     }
 }
 
-std::vector<double> Matrix::divideRow(std::vector<double> rowElements) {
+std::vector<double> Matrix::divideRow(std::vector<double> &rowElements) {
     double divider = getDivider(rowElements);
     for (auto &elements: rowElements) {
         elements /= divider;
@@ -158,7 +159,7 @@ std::vector<double> Matrix::divideRow(std::vector<double> rowElements) {
     return rowElements;
 }
 
-int Matrix::numberOfZeroRows(std::vector<std::vector<double>> matrix) {
+int Matrix::numberOfZeroRows(const std::vector<std::vector<double>> &matrix) {
     int zeroRows = matrix.size();
 
     for (auto row: matrix) {
@@ -238,7 +239,7 @@ std::vector<Matrix> Matrix::get2x2Mirrors(Matrix subMatrix) {
 }
 
 
-double Matrix::determinant2x2(Matrix determinant_2x2) {
+double Matrix::determinant2x2(const Matrix &determinant_2x2) {
     return determinant_2x2.getElements(0, 0) * determinant_2x2.getElements(1, 1) -
            determinant_2x2.getElements(0, 1) * determinant_2x2.getElements(1, 0);
 
@@ -263,7 +264,7 @@ Matrix Matrix::inverse() {
     return getAdjoint().scalarMultiplication(1 / determinant());
 }
 
-Matrix Matrix::operator=(Matrix &rhs) {
+Matrix Matrix::operator=(const Matrix &rhs) {
     if (this == &rhs) {
         return *this;
     }
@@ -274,23 +275,23 @@ Matrix Matrix::operator=(Matrix &rhs) {
 
 }
 
-Matrix Matrix::operator+(Matrix &rhs) {
+Matrix Matrix::operator+(const Matrix &rhs) {
     return add(rhs);
 }
 
-Matrix Matrix::operator-(Matrix &rhs) {
+Matrix Matrix::operator-(const Matrix &rhs) {
     return subtract(rhs);
 }
 
-Matrix Matrix::operator*(Matrix &rhs) {
+Matrix Matrix::operator*(const Matrix &rhs) {
     return multiply(rhs);
 }
 
-Matrix Matrix::operator/(double &scaler) {
+Matrix Matrix::operator/(const double &scaler) {
     return scalarMultiplication(1 / scaler);
 }
 
-bool Matrix::operator==(Matrix &rhs) {
+bool Matrix::operator==(const Matrix &rhs) {
     if (this == &rhs) {
         return true;
     } else {
@@ -309,7 +310,7 @@ bool Matrix::operator==(Matrix &rhs) {
 
 }
 
-bool Matrix::operator!=(Matrix &rhs) {
+bool Matrix::operator!=(const Matrix &rhs) {
     return (!(*this == rhs));
 }
 
@@ -317,7 +318,7 @@ Matrix Matrix::operator*(int &scaler) {
     return scalarMultiplication(scaler);
 }
 
-std::ostream &operator<<(std::ostream &os, Matrix &lhs) {
+std::ostream &operator<<(std::ostream &os, const Matrix &lhs) {
     for (auto &row: lhs.matrix) {
         std::cout << "[ ";
         for (auto &column: row) {
@@ -327,6 +328,10 @@ std::ostream &operator<<(std::ostream &os, Matrix &lhs) {
     }
     return os;
 }
+Matrix Matrix::operator~(){
+    return transpose();
+}
+
 
 
 

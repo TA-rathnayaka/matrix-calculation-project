@@ -40,8 +40,7 @@ int main() {
                         std::cin >> matrixIndex;
                         if (matrices.size() > matrixIndex) {
                             operandTwo = matrices.at(matrixIndex);
-                            Matrix temp = operandOne + operandTwo;
-                            std::cout << temp << std::endl;
+                            std::cout << operandOne + operandTwo << std::endl;
                         } else {
                             std::cout << "Wrong Input" << std::endl;
                         }
@@ -65,8 +64,7 @@ int main() {
                         std::cin >> matrixIndex;
                         if (matrices.size() > matrixIndex) {
                             operandTwo = matrices.at(matrixIndex);
-                            Matrix temp = operandOne - operandTwo;
-                            std::cout << temp << std::endl;
+                            std::cout << operandOne - operandTwo << std::endl;
                         } else {
                             std::cout << "Wrong Input" << std::endl;
                         }
@@ -90,8 +88,7 @@ int main() {
                         std::cin >> matrixIndex;
                         if (matrices.size() > matrixIndex) {
                             operandTwo = matrices.at(matrixIndex);
-                            Matrix temp = operandOne * operandTwo;
-                            std::cout << temp << std::endl;
+                            std::cout << operandOne * operandTwo << std::endl;
                         } else {
                             std::cout << "Wrong Input" << std::endl;
                         }
@@ -113,8 +110,7 @@ int main() {
                     std::cin >> scalar;
                     operandOne = matrices.at(matrixIndex);
                     if (matrixIndex < matrices.size()) {
-                        Matrix temp = operandOne * scalar;
-                        std::cout << temp << std::endl;
+                        std::cout << operandOne * scalar << std::endl;
                     } else {
                         std::cout << "Wrong input" << std::endl;
                     }
@@ -130,7 +126,7 @@ int main() {
                     std::cin >> matrixIndex;
                     operandOne = matrices.at(matrixIndex);
                     if (matrixIndex < matrices.size()) {
-                        operandOne.transpose().print();
+                        std::cout << ~operandOne << std::endl;
                     } else {
                         std::cout << "Wrong input" << std::endl;
                     }
